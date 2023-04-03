@@ -165,9 +165,9 @@ module Telegrammer
     # @return [Telegrammer::DataTypes::Message] Message object sent to the user or group chat
     def forward_message(params)
       params_validation = {
-        chat_id: { required: true, class: [Fixnum] },
+        chat_id: { required: true, class: [Integer] },
         from_chat_id: { required: true, class: [String] },
-        message_id: { required: true, class: [Fixnum] }
+        message_id: { required: true, class: [Integer] }
       }
 
       response = api_request('forwardMessage', params, params_validation)
@@ -395,7 +395,7 @@ module Telegrammer
     # @return [Telegrammer::ApiResponse] Response from the API.
     def send_chat_action(params)
       params_validation = {
-        chat_id: { required: true, class: [Fixnum, String] },
+        chat_id: { required: true, class: [Integer, String] },
         action: { required: true, class: [String] }
       }
 
@@ -419,9 +419,9 @@ module Telegrammer
     # @return [Telegrammer::DataTypes::UserProfilePhotos] Message object sent to the user or group chat
     def get_user_profile_photos(params)
       params_validation = {
-        user_id: { required: true, class: [Fixnum] },
-        offset: { required: false, class: [Fixnum] },
-        limit: { required: false, class: [Fixnum] }
+        user_id: { required: true, class: [Integer] },
+        offset: { required: false, class: [Integer] },
+        limit: { required: false, class: [Integer] }
       }
 
       response = api_request('getUserProfilePhotos', params, params_validation)
@@ -458,7 +458,7 @@ module Telegrammer
     # @param [Hash] params hash of paramers to send to the answerInlineQuery API operation.
     # @option params [String] :inline_query_id Required. Unique identifier for the answered query
     # @option params [Array] :results Required. An array of InlineQueryResults objects for the inline query
-    # @option params [Fixnum] :cache_time Optional. The maximum amount of time the result of the inline query may be cached on the server
+    # @option params [Integer] :cache_time Optional. The maximum amount of time the result of the inline query may be cached on the server
     # @option params [TrueClass,FalseClass] :is_personal Optional. Pass True, if results may be cached on the server side only for the user that sent the query. By default, results may be returned to any user who sends the same query
     # @option params [String] :next_offset Optional. Pass the offset that a client should send in the next query with the same text to receive more results. Pass an empty string if there are no more results or if you don‘t support pagination. Offset length can’t exceed 64 bytes.
 
@@ -490,7 +490,7 @@ module Telegrammer
       params_validation = {
         inline_query_id: { required: true, class: [String] },
         results: { required: true, class: [Array] },
-        cache_time: { required: false, class: [Fixnum] },
+        cache_time: { required: false, class: [Integer] },
         is_personal: { required: false, class: [TrueClass, FalseClass] },
         next_offset: { required: false, class: [String] }
       }
@@ -523,7 +523,7 @@ module Telegrammer
           end
 
           # Prepare params for sending in Typhoeus post body request
-          params[key] = value.to_s if value.class == Fixnum
+          params[key] = value.to_s if value.class == Integer
           params[key] = value.to_h.to_json if [
             Telegrammer::DataTypes::ReplyKeyboardMarkup,
             Telegrammer::DataTypes::ReplyKeyboardHide,
@@ -550,7 +550,7 @@ module Telegrammer
 
     def send_something(object_kind, params, extra_params_validation = {})
       params_validation = {
-        chat_id: { required: true, class: [Fixnum, String] },
+        chat_id: { required: true, class: [Integer, String] },
         reply_to_message_id: { required: false, class: [String] },
         reply_markup: { required: false, class: [
           Telegrammer::DataTypes::ReplyKeyboardMarkup,
